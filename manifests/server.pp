@@ -55,7 +55,7 @@ class openvpn::server (
   }
 
   exec { "create ${dh}":
-    path    => ['/usr/bin','/usr/sbin']
+    path    => ['/usr/bin','/usr/sbin'],
     cwd     => $openvpn_dir,
     command => "openssl dhparam -out ${dh} 2048",
     creates => "${openvpn_dir}/${dh}",
