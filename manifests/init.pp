@@ -33,10 +33,18 @@ class openvpn(
       mode  => "0755",
       source => "puppet:///modules/openvpn/openvpn-rc.d",
     }
+    file { "/etc/rc.conf.local":
+      replace => "no",
+      ensure  => "present",
+      mode    => 644,
+      owner   => '0',
+      group   => '0',
+    }
     file_line {"enable_openvpn":
       path   => "/etc/rc.conf.local",
       line   => "openvpn_flags=\"--cd ${openvpn_dir} --config ${openvpn_dir}/openvpn.conf --daemon\"",
-      ensure => present
+      ensure => present,
+      require => File['/etc/rc.conf.local']
     }
   } else {
     service {
