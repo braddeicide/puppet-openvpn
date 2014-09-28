@@ -54,6 +54,15 @@ class openvpn::server (
     notify  => Service['openvpn'],
   }
 
+  if $ccd != '' {
+    file { "${openvpn_dir}/${ccd}":
+      ensure => 'directory',
+      owner   => root,
+      group   => 0,
+      mode    => '0700',
+      notify  => Service['openvpn'],
+    }
+  }
   exec { "create ${dh}":
     path    => ['/usr/bin','/usr/sbin'],
     cwd     => $openvpn_dir,
